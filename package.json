@@ -1,6 +1,6 @@
 {
   "name": "swedish-personal-identity-number",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A library for managing Swedish personal identity numbers.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
