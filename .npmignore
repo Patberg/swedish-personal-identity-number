@@ -2,6 +2,6 @@
 .github
 src
 tsconfig.json
-.eslitrc.json
+.eslintrc.json
 .eslintignore
 .prettierrc
