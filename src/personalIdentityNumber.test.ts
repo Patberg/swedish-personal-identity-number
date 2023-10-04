@@ -17,10 +17,43 @@ describe("personalIdentityNumber", () => {
     },
   );
 
+  it.each(["19920873-2389", "199208732389", "9208732389", "920873-2389"])(
+    "valid temporary personal number %s should not throw error",
+    (personalNumber) => {
+      expect(() => PersonalIdentityNumber.parse(personalNumber)).not.toThrow();
+    },
+  );
+
   it.each(["199911232388", "19991123-2388", "9911232388", "19991123-2388"])("should be able to parse a valid personal number", (input) => {
     const personalNumber = PersonalIdentityNumber.parse(input);
     expect(personalNumber.dateOfBirth).toEqual(new Date(1999, 10, 23));
     expect(personalNumber.digits).toEqual(2388);
     expect(personalNumber.isTemporaryNumber).toEqual(false);
   });
+
+  it.each(["19920873-2389", "199208732389", "9208732389", "920873-2389"])(
+    "should be able to parse a valid temporaru personal number",
+    (input) => {
+      const personalNumber = PersonalIdentityNumber.parse(input);
+      expect(personalNumber.dateOfBirth).toEqual(new Date(1992, 7, 13));
+      expect(personalNumber.digits).toEqual(2389);
+      expect(personalNumber.isTemporaryNumber).toEqual(true);
+    },
+  );
+
+  it.each(["199911232388", "19991123-2388", "9911232388", "991123-2388"])(
+    "should be able to convert valid personal numbers to a string uniform string format",
+    (input) => {
+      const personalNumber = PersonalIdentityNumber.parse(input);
+      expect(personalNumber.toString()).toEqual("19991123-2388");
+    },
+  );
+
+  it.each(["19920873-2389", "199208732389", "9208732389", "920873-2389"])(
+    "should be able to convert valid temporary personal numbers to a string uniform string format",
+    (input) => {
+      const personalNumber = PersonalIdentityNumber.parse(input);
+      expect(personalNumber.toString()).toEqual("19920873-2389");
+    },
+  );
 });

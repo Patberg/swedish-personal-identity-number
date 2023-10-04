@@ -66,4 +66,19 @@ export class PersonalIdentityNumber {
 
     return new PersonalIdentityNumber(new Date(parsedYear, parsedMonth, birthDay), parseInt(digits), true);
   }
+
+  toString(): string {
+    if (this.isTemporaryNumber) {
+      const formattedDate = `${this.dateOfBirth.getFullYear()}${(this.dateOfBirth.getMonth() + 1).toString().padStart(2, "0")}`;
+      const day = this.dateOfBirth.getDate() + 60;
+      const checkSum = this.digits.toString().padStart(4, "0");
+      return `${formattedDate}${day}-${checkSum}`;
+    } else {
+      const formattedDate = `${this.dateOfBirth.getFullYear()}${(this.dateOfBirth.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}${this.dateOfBirth.getDate().toString().padStart(2, "0")}`;
+      const checkSum = this.digits.toString().padStart(4, "0");
+      return `${formattedDate}-${checkSum}`;
+    }
+  }
 }
