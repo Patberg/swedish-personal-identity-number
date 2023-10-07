@@ -114,4 +114,9 @@ describe("personalIdentityNumber", () => {
 
     expect(firstPersonalNumber.equals(secondPersonalNumber)).toEqual(false);
   });
+
+  it("should support '+' notation for persons older than 100 years", () => {
+    const personalIdentityNumber = PersonalIdentityNumber.parse("121212+1212");
+    expect(personalIdentityNumber.dateOfBirth.getFullYear()).toEqual(1912);
+  });
 });
