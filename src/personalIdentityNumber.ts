@@ -7,6 +7,7 @@ export class PersonalIdentityNumber {
   private constructor(
     readonly dateOfBirth: Date,
     readonly digits: number,
+    readonly gender: "Male" | "Female",
     readonly isTemporaryNumber: boolean = false,
   ) {}
 
@@ -54,8 +55,10 @@ export class PersonalIdentityNumber {
 
     const daysInBirthMonth = daysInMonth(parsedYear, parsedMonth);
 
+    const gender = parseInt(digits[2]) % 2 === 0 ? "Female" : "Male";
+
     if (parsedDay <= daysInBirthMonth) {
-      return new PersonalIdentityNumber(new Date(parsedYear, parsedMonth, parsedDay), parseInt(digits));
+      return new PersonalIdentityNumber(new Date(parsedYear, parsedMonth, parsedDay), parseInt(digits), gender);
     }
 
     const birthDay = parsedDay - 60;
@@ -64,7 +67,15 @@ export class PersonalIdentityNumber {
       throw new Error(`The number '${personalIdentityNumber}' is not a valid social security number.`);
     }
 
-    return new PersonalIdentityNumber(new Date(parsedYear, parsedMonth, birthDay), parseInt(digits), true);
+    return new PersonalIdentityNumber(new Date(parsedYear, parsedMonth, birthDay), parseInt(digits), gender, true);
+  }
+
+  static tryParse(personalIdentityNumber: string): PersonalIdentityNumber | null {
+    try {
+      return PersonalIdentityNumber.parse(personalIdentityNumber);
+    } catch (error) {
+      return null;
+    }
   }
 
   toString(): string {
