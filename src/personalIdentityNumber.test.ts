@@ -18,7 +18,7 @@ describe("personalIdentityNumber", () => {
   );
 
   it.each(["19920873-2389", "199208732389", "9208732389", "920873-2389"])(
-    "valid temporary personal number %s should not throw error",
+    "valid co-ordination number %s should not throw error",
     (personalNumber) => {
       expect(() => PersonalIdentityNumber.parse(personalNumber)).not.toThrow();
     },
@@ -28,16 +28,16 @@ describe("personalIdentityNumber", () => {
     const personalNumber = PersonalIdentityNumber.parse(input);
     expect(personalNumber.dateOfBirth).toEqual(new Date(1999, 10, 23));
     expect(personalNumber.digits).toEqual(2388);
-    expect(personalNumber.isTemporaryNumber).toEqual(false);
+    expect(personalNumber.isCoordinationNumber).toEqual(false);
   });
 
   it.each(["19920873-2389", "199208732389", "9208732389", "920873-2389"])(
-    "should be able to parse a valid temporary personal number",
+    "should be able to parse a valid co-ordination number",
     (input) => {
       const personalNumber = PersonalIdentityNumber.parse(input);
       expect(personalNumber.dateOfBirth).toEqual(new Date(1992, 7, 13));
       expect(personalNumber.digits).toEqual(2389);
-      expect(personalNumber.isTemporaryNumber).toEqual(true);
+      expect(personalNumber.isCoordinationNumber).toEqual(true);
     },
   );
 
@@ -67,7 +67,7 @@ describe("personalIdentityNumber", () => {
       const personalNumber = PersonalIdentityNumber.tryParse(input);
       expect(personalNumber!.dateOfBirth).toEqual(new Date(1999, 10, 23));
       expect(personalNumber!.digits).toEqual(2388);
-      expect(personalNumber!.isTemporaryNumber).toEqual(false);
+      expect(personalNumber!.isCoordinationNumber).toEqual(false);
     },
   );
 
@@ -84,5 +84,20 @@ describe("personalIdentityNumber", () => {
   it("should be able to return a correct short string", () => {
     const personalNumber = PersonalIdentityNumber.parse("19991123-2388");
     expect(personalNumber!.toShortString()).toEqual("991123-2388");
+  });
+
+  it("should return unknown birth place if born in 1990 or later", () => {
+    const personalNumber = PersonalIdentityNumber.parse("19991123-2388");
+    expect(personalNumber!.placeOfBirth).toEqual("Unknown");
+  });
+
+  it("should return birth place if born before 1990", () => {
+    const personalNumber = PersonalIdentityNumber.parse("198912242388");
+    expect(personalNumber!.placeOfBirth).toEqual("Östergötlands län");
+  });
+
+  it("should return uknown birth place for a co-ordination even if the person was born before 1990", () => {
+    const personalNumber = PersonalIdentityNumber.parse("197802662390");
+    expect(personalNumber!.placeOfBirth).toEqual("Unknown");
   });
 });

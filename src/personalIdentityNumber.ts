@@ -1,5 +1,6 @@
 import { daysInMonth } from "./dateUtilities";
 import { luhnCheck } from "./luhn";
+import { PlaceOfBirth, getPlaceOfBirth } from "./placeOfBirth";
 
 export class PersonalIdentityNumber {
   static PERSONAL_IDENTITY_NUMBER_REGEX = /^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+\-\s]?)(\d{3})(\d)/;
@@ -8,7 +9,8 @@ export class PersonalIdentityNumber {
     readonly dateOfBirth: Date,
     readonly digits: number,
     readonly gender: "Male" | "Female",
-    readonly isTemporaryNumber: boolean = false,
+    readonly placeOfBirth: PlaceOfBirth = "Unknown",
+    readonly isCoordinationNumber: boolean = false,
   ) {}
 
   static parse(personalIdentityNumber: string): PersonalIdentityNumber {
@@ -58,7 +60,12 @@ export class PersonalIdentityNumber {
     const gender = parseInt(digits[2]) % 2 === 0 ? "Female" : "Male";
 
     if (parsedDay <= daysInBirthMonth) {
-      return new PersonalIdentityNumber(new Date(parsedYear, parsedMonth, parsedDay), parseInt(digits), gender);
+      return new PersonalIdentityNumber(
+        new Date(parsedYear, parsedMonth, parsedDay),
+        parseInt(digits),
+        gender,
+        parsedYear < 1990 ? getPlaceOfBirth(digits) : "Unknown",
+      );
     }
 
     const birthDay = parsedDay - 60;
@@ -67,7 +74,7 @@ export class PersonalIdentityNumber {
       throw new Error(`The number '${personalIdentityNumber}' is not a valid social security number.`);
     }
 
-    return new PersonalIdentityNumber(new Date(parsedYear, parsedMonth, birthDay), parseInt(digits), gender, true);
+    return new PersonalIdentityNumber(new Date(parsedYear, parsedMonth, birthDay), parseInt(digits), gender, "Unknown", true);
   }
 
   static tryParse(personalIdentityNumber: string): PersonalIdentityNumber | null {
@@ -79,7 +86,7 @@ export class PersonalIdentityNumber {
   }
 
   toString(): string {
-    if (this.isTemporaryNumber) {
+    if (this.isCoordinationNumber) {
       const formattedDate = `${this.dateOfBirth.getFullYear()}${(this.dateOfBirth.getMonth() + 1).toString().padStart(2, "0")}`;
       const day = this.dateOfBirth.getDate() + 60;
       const checkSum = this.digits.toString().padStart(4, "0");
