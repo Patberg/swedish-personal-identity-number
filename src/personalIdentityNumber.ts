@@ -92,4 +92,5 @@ export class PersonalIdentityNumber {
       return `${formattedDate}-${checkSum}`;
     }
   }
+  toShortString = (): string => this.toString().slice(2);
 }

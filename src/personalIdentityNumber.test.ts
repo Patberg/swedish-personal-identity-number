@@ -80,4 +80,9 @@ describe("personalIdentityNumber", () => {
     const personalNumber = PersonalIdentityNumber.parse("19991123-2388");
     expect(personalNumber!.gender).toEqual("Female");
   });
+
+  it("should be able to return a correct short string", () => {
+    const personalNumber = PersonalIdentityNumber.parse("19991123-2388");
+    expect(personalNumber!.toShortString()).toEqual("991123-2388");
+  });
 });
