@@ -100,4 +100,6 @@ export class PersonalIdentityNumber {
     }
   }
   toShortString = (): string => this.toString().slice(2);
+
+  equals = (other: PersonalIdentityNumber): boolean => this.toString() === other.toString();
 }

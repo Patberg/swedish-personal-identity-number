@@ -100,4 +100,18 @@ describe("personalIdentityNumber", () => {
     const personalNumber = PersonalIdentityNumber.parse("197802662390");
     expect(personalNumber!.placeOfBirth).toEqual("Unknown");
   });
+
+  it("equality should return true for instances with the same personal identity number", () => {
+    const firstPersonalNumber = PersonalIdentityNumber.parse("198912242388");
+    const secondPersonalNumber = PersonalIdentityNumber.parse("891224-2388");
+
+    expect(firstPersonalNumber.equals(secondPersonalNumber)).toEqual(true);
+  });
+
+  it("equality should return false for instances with different personal identity numbers", () => {
+    const firstPersonalNumber = PersonalIdentityNumber.parse("198912242388");
+    const secondPersonalNumber = PersonalIdentityNumber.parse("19991123-2388");
+
+    expect(firstPersonalNumber.equals(secondPersonalNumber)).toEqual(false);
+  });
 });
