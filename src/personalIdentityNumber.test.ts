@@ -24,12 +24,15 @@ describe("personalIdentityNumber", () => {
     },
   );
 
-  it.each(["199911232388", "19991123-2388", "9911232388", "19991123-2388"])("should be able to parse a valid personal number", (input) => {
-    const personalNumber = PersonalIdentityNumber.parse(input);
-    expect(personalNumber.dateOfBirth).toEqual(new Date(1999, 10, 23));
-    expect(personalNumber.digits).toEqual(2388);
-    expect(personalNumber.isCoordinationNumber).toEqual(false);
-  });
+  it.each(["199911232388", "19991123-2388", "9911232388", "19991123-2388", "991123 2388"])(
+    "should be able to parse a valid personal number",
+    (input) => {
+      const personalNumber = PersonalIdentityNumber.parse(input);
+      expect(personalNumber.dateOfBirth).toEqual(new Date(1999, 10, 23));
+      expect(personalNumber.digits).toEqual(2388);
+      expect(personalNumber.isCoordinationNumber).toEqual(false);
+    },
+  );
 
   it.each(["19920873-2389", "199208732389", "9208732389", "920873-2389"])(
     "should be able to parse a valid co-ordination number",

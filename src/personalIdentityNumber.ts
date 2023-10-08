@@ -2,17 +2,59 @@ import { daysInMonth } from "./dateUtilities";
 import { luhnCheck } from "./luhn";
 import { PlaceOfBirth, getPlaceOfBirth } from "./placeOfBirth";
 
+/**
+ * Represents a Swedish personal identity number.
+ */
 export class PersonalIdentityNumber {
   static PERSONAL_IDENTITY_NUMBER_REGEX = /^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+\-\s]?)(\d{3})(\d)/;
 
-  private constructor(
-    readonly dateOfBirth: Date,
-    readonly digits: number,
-    readonly gender: "Male" | "Female",
-    readonly placeOfBirth: PlaceOfBirth = "Unknown",
-    readonly isCoordinationNumber: boolean = false,
-  ) {}
+  /**
+   * Date of birth of the person.
+   */
+  readonly dateOfBirth: Date;
 
+  /**
+   * Four-digit personal code.
+   */
+  readonly digits: number;
+
+  /**
+   * Gender of the person, can be either "Male" or "Female".
+   */
+  readonly gender: "Male" | "Female";
+
+  /**
+   * The region or municipality of birth.
+   */
+  readonly placeOfBirth: PlaceOfBirth;
+
+  /**
+   * Indicates if the personal identity number is a co-ordination number.
+   */
+  readonly isCoordinationNumber: boolean;
+
+  private constructor(
+    dateOfBirth: Date,
+    digits: number,
+    gender: "Male" | "Female",
+    placeOfBirth: PlaceOfBirth = "Unknown",
+    isCoordinationNumber: boolean = false,
+  ) {
+    this.dateOfBirth = dateOfBirth;
+    this.digits = digits;
+    this.gender = gender;
+    this.placeOfBirth = placeOfBirth;
+    this.isCoordinationNumber = isCoordinationNumber;
+  }
+
+  /**
+   * Parses a string representation of a personal identity number and returns a new `PersonalIdentityNumber` instance.
+   * Throws an error if the provided string is not a valid personal identity number.
+   *
+   * @param personalIdentityNumber - The string representation of a personal identity number. The string can be in any of the following formats: YYYYMMDD-XXXX, YYMMDD-XXXX, YYYYMMDDXXXX, YYMMDDXXXX, YYMMDD+XXXX, YYMMDD XXXX, YYMMDDXXXX.
+   * @returns A new `PersonalIdentityNumber` instance.
+   * @throws {Error} Throws an error if the argument is not a valid personal identity number.
+   */
   static parse(personalIdentityNumber: string): PersonalIdentityNumber {
     if (personalIdentityNumber === undefined) {
       throw new Error("personalIdentityNumber is undefined");
@@ -77,6 +119,11 @@ export class PersonalIdentityNumber {
     return new PersonalIdentityNumber(new Date(parsedYear, parsedMonth, birthDay), parseInt(digits), gender, "Unknown", true);
   }
 
+  /**
+   *
+   * @param personalIdentityNumber - The string representation of a personal identity number. The string can be in any of the following formats: YYYYMMDD-XXXX, YYMMDD-XXXX, YYYYMMDDXXXX, YYMMDDXXXX, YYMMDD+XXXX, YYMMDD XXXX, YYMMDDXXXX.
+   * @returns A new `PersonalIdentityNumber` instance or null if the argument is not a valid personal identity number.
+   */
   static tryParse(personalIdentityNumber: string): PersonalIdentityNumber | null {
     try {
       return PersonalIdentityNumber.parse(personalIdentityNumber);
@@ -84,6 +131,11 @@ export class PersonalIdentityNumber {
       return null;
     }
   }
+
+  /**
+   * Returns a string representation of the personal identity number in the format YYYYMMDD-XXXX.
+   *
+   */
 
   toString(): string {
     if (this.isCoordinationNumber) {
@@ -99,6 +151,11 @@ export class PersonalIdentityNumber {
       return `${formattedDate}-${checkSum}`;
     }
   }
+
+  /*
+   * Returns a short string representation of the personal identity number in the format YYMMDD-XXXX.
+   */
+
   toShortString = (): string => this.toString().slice(2);
 
   equals = (other: PersonalIdentityNumber): boolean => this.toString() === other.toString();

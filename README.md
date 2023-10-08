@@ -166,7 +166,7 @@ if (result) {
 ## Repository & Author
 
 - **GitHub Repository**: [swedish-personal-identity-number](https://github.com/Patberg/swedish-personal-identity-number.git)
-- **Author**: [Patrik Bergström](https://github.com/svenheden)
+- **Author**: [Patrik Bergström](https://github.com/Patberg)
 - **License**: MIT
 
 ## Contribution

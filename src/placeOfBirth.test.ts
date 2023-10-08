@@ -164,10 +164,6 @@ describe("getPlaceOfBirth", () => {
     expect(getPlaceOfBirth("99")).toBe("Unknown");
   });
 
-  it("should throw an error if digits is undefined", () => {
-    expect(() => getPlaceOfBirth(undefined)).toThrow("Digits is undefined");
-  });
-
   it("should throw an error if digits is less than 2 characters long", () => {
     expect(() => getPlaceOfBirth("")).toThrow("Digits must be at least 2 characters long");
     expect(() => getPlaceOfBirth("1")).toThrow("Digits must be at least 2 characters long");

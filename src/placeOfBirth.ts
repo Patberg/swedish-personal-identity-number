@@ -1,3 +1,6 @@
+/**
+ * Represents the possible places of birth for a person in Sweden.
+ */
 export type PlaceOfBirth =
   | "Stockholms stad"
   | "Stockholms län"
@@ -27,7 +30,6 @@ export type PlaceOfBirth =
   | "Unknown";
 
 export function getPlaceOfBirth(digits: string): PlaceOfBirth {
-  if (digits === undefined) throw new Error("Digits is undefined");
   if (digits.length < 2) throw new Error("Digits must be at least 2 characters long");
 
   const placeOfBirthDigits = parseInt(digits.substring(0, 2));
