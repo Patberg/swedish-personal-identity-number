@@ -1,5 +1,11 @@
 # swedish-personal-identity-number
 
+## 0.0.4
+
+### Patch Changes
+
+- 698224f: Extending PersonalIdentityNumber class
+
 ## 0.0.3
 
 ### Patch Changes
