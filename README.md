@@ -46,8 +46,8 @@ const { PersonalIdentityNumber } = require("swedish-personal-identity-number");
 
 ## Key Features
 
-1. **Regex Based Validation** - Uses a regular expression to quickly validate the format of a given personal identity number.
-2. **Luhn Algorithm Check** - Ensures that the checksum of the number is valid.
+1. **Format Validation** - Quickly validate the format of a given personal identity number.
+2. **Checksum(Luhn) Validation** - Ensures that the checksum of the number is valid.
 3. **Gender Identification** - Determines gender based on the personal identity number.
 4. **Date and Place of Birth** - Parses the date of birth and potentially the place of birth if it's available.
 5. **Coordination Number Identification** - Determines if a number is a coordination number rather than a standard personal identity number.
@@ -68,7 +68,8 @@ The `parse` and `tryParse` methods of the `PersonalIdentityNumber` class can han
 4. Short without century and with hyphen: `YYMMDD-XXXX`  
    Example: `991123-2388`
 
-It's crucial to ensure that the provided personal identity number adheres to one of these formats for correct parsing and processing.
+5. Short without century and with plus(indicating that the person was born in the previous century): `YYMMDD+XXXX`  
+   Example: `121212+1212`
 
 ---
 
