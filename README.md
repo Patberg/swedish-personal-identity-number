@@ -1,6 +1,6 @@
 # Swedish Personal Identity Number Library
 
-![CI](https://github.com/Patberg/swedish-personal-identity-number/actions/workflows/main.yml/badge.svg) ![CD](https://github.com/Patberg/swedish-personal-identity-number/actions/workflows/publish.yml/badge.svg) ![npm](https://img.shields.io/npm/v/swedish-personal-identity-number?logo=npm)
+[![Build](https://github.com/Patberg/swedish-personal-identity-number/actions/workflows/main.yml/badge.svg)](https://github.com/Patberg/swedish-personal-identity-number/actions/workflows/main.yml) [![Publish](https://github.com/Patberg/swedish-personal-identity-number/actions/workflows/publish.yml/badge.svg)](https://github.com/Patberg/swedish-personal-identity-number/actions/workflows/publish.yml) [![npm](https://img.shields.io/npm/v/swedish-personal-identity-number?logo=npm)](https://www.npmjs.com/package/swedish-personal-identity-number)
 
 ## Overview
 
